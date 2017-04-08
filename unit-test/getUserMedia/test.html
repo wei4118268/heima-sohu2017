@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取摄像头信息</title>
+</head>
+<body>
+<video id="video" controls="controls"></video>    
+</body>
+<script>
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+if( navigator.getUserMedia ){
+    navigator.getUserMedia( {
+        audio : true,
+        video : { width : 1280, height : 720 }
+    }, function( stream ){
+        succCallback( stream );
+    }, function(){
+        console.log( 'Not support!' )
+    } )
+}
+
+function succCallback( stream ){
+    var myvideo = document.getElementById( 'video' );
+    myvideo.src = window.URL.createObjectURL( stream );
+    myvideo.onloadedmetadata = function( e ){
+        myvideo.play();
+    }
+}
+
+</script>
+</html>
