@@ -11,6 +11,9 @@ var phi = 0, theta = 0;
 //} );
 var video = document.getElementById( 'video' );
 var texture = new THREE.VideoTexture( video );
+texture.minFilter = THREE.LinearFilter;
+texture.magFilter = THREE.LinearFilter;
+texture.format = THREE.RGBFormat;
 texture.mapping = THREE.UVMapping;
 init( texture );
 animate();
@@ -48,7 +51,10 @@ function init( texture ) {
 	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	document.addEventListener( 'wheel', onDocumentMouseWheel, false );
 	window.addEventListener( 'resize', onWindowResized, false );
+    window.addEventListener( 'deviceorientation', onOrientationChange, false );
 }
+
+
 function onWindowResized( event ) {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	camera.aspect = window.innerWidth / window.innerHeight;
@@ -75,6 +81,16 @@ function onDocumentMouseWheel( event ) {
 	camera.fov += ( event.deltaY * 0.05 );
 	camera.updateProjectionMatrix();
 }
+function onOrientationChange( event ){
+    var alpha = event.alpha,
+        beta = event.beta,
+        gamma = event.gamma;
+
+    lon = gamma;
+    lat = beta;
+}
+
+
 function animate() {
 	requestAnimationFrame( animate );
 	render();
