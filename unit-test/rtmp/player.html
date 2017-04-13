@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RTMP Player</title>
+    <script type="text/javascript" src="swfobject.js"></script>
+    <script type="text/javascript">
+        var flashVars = {
+            streamer: 'rtmp://10.7.36.231:1935/rtmplive/home'
+        };
+        var params = {};
+        params.allowfullscreen = "true";
+        var attributes = {};
+        swfobject.embedSWF("RtmpPlayer.swf", "rtmp-publisher", "640", "480", "9.0.0", null, flashVars, params, attributes);
+    </script>
+</head>
+<body>
+    <div id="rtmp-publisher">
+        <p>Flash not installed</p>
+    </div>
+
+
+    <object data="RtmpPlayer.swf"
+        id="rtmpPlayer"
+        type="application/x-shockwave-flash"
+        width="640"
+        height="480">
+    <param value="false" name="menu" />
+    <param value="noScale" name="scale" />
+    <param value="true" name="allowFullscreen" />
+    <param value="always" name="allowScriptAccess" />
+    <param value="#000000" name="bgcolor" />
+    <param value="high" name="quality" />
+    <param value="opaque" name="wmode" />
+    <!-- To play flv over RTMP without preview -->
+    <param value="source=video&amp;server=rtmp://10.7.36.231:1935/rtmplive/home"
+           name="flashvars" />
+</object>
+</body>
+</html>
