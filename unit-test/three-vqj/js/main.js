@@ -15,6 +15,10 @@ texture.minFilter = THREE.LinearFilter;
 texture.magFilter = THREE.LinearFilter;
 texture.format = THREE.RGBFormat;
 texture.mapping = THREE.UVMapping;
+
+//mobile device or PC
+var isM = false;
+
 init( texture );
 animate();
 
@@ -82,12 +86,15 @@ function onDocumentMouseWheel( event ) {
 	camera.updateProjectionMatrix();
 }
 function onOrientationChange( event ){
+    isM = true;
     var alpha = event.alpha,
         beta = event.beta,
-        gamma = event.gamma;
+        gamma = event.gamma,
+        webkitCompassHeading = event.webkitCompassHeading;
 
-    lon = gamma;
+
     lat = beta;
+    lon = webkitCompassHeading;
 }
 
 
@@ -98,22 +105,31 @@ function animate() {
 function render() {
 	var time = Date.now();
 	//lon += .15;
-	lat = Math.max( - 85, Math.min( 85, lat ) );
-	phi = THREE.Math.degToRad( 90 - lat );
-	theta = THREE.Math.degToRad( lon );
-	// cube.position.x = Math.cos( time * 0.001 ) * 30;
-	// cube.position.y = Math.sin( time * 0.001 ) * 30;
-	// cube.position.z = Math.sin( time * 0.001 ) * 30;
-	// cube.rotation.x += 0.02;
-	// cube.rotation.y += 0.03;
-	// torus.position.x = Math.cos( time * 0.001 + 10 ) * 30;
-	// torus.position.y = Math.sin( time * 0.001 + 10 ) * 30;
-	// torus.position.z = Math.sin( time * 0.001 + 10 ) * 30;
-	// torus.rotation.x += 0.02;
-	// torus.rotation.y += 0.03;
-	camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
-	camera.position.y = 100 * Math.cos( phi );
-	camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+    if( !isM ){
+        lat = Math.max( - 85, Math.min( 85, lat ) );
+        phi = THREE.Math.degToRad( 90 - lat );
+        theta = THREE.Math.degToRad( lon );
+        // cube.position.x = Math.cos( time * 0.001 ) * 30;
+        // cube.position.y = Math.sin( time * 0.001 ) * 30;
+        // cube.position.z = Math.sin( time * 0.001 ) * 30;
+        // cube.rotation.x += 0.02;
+        // cube.rotation.y += 0.03;
+        // torus.position.x = Math.cos( time * 0.001 + 10 ) * 30;
+        // torus.position.y = Math.sin( time * 0.001 + 10 ) * 30;
+        // torus.position.z = Math.sin( time * 0.001 + 10 ) * 30;
+        // torus.rotation.x += 0.02;
+        // torus.rotation.y += 0.03;
+        camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
+        camera.position.y = 100 * Math.cos( phi );
+        camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+    }else{
+        lat = Math.max( - 85, Math.min( 85, lat ) );
+        phi = THREE.Math.degToRad( lat );
+        theta = THREE.Math.degToRad( lon );
+        camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
+        camera.position.y = 100 * Math.cos( phi );
+        camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+    }
 	camera.lookAt( scene.position );
 	//sphere.visible = false;
 	// pingpong

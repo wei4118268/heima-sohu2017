@@ -93,6 +93,7 @@ function render() {
 	camera.position.x = 100 * Math.sin( phi ) * Math.cos( theta );
 	camera.position.y = 100 * Math.cos( phi );
 	camera.position.z = 100 * Math.sin( phi ) * Math.sin( theta );
+    console.log( lat + '\n' + lon )
 	camera.lookAt( scene.position );
 	//sphere.visible = false;
 	// pingpong
